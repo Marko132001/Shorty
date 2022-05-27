@@ -19,11 +19,11 @@ public class RegistrationService {
 		if(!userRepository.existsById(user.getUserName())) {
 			
 			userRepository.save(user);
-			user.success = true;
+			user.setSuccess(true);
 			return;
 		}
 		
-		user.success = false;
+		user.setSuccess(false);
 
 	}
 	

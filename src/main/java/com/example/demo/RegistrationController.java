@@ -20,14 +20,21 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 @RestController
 public class RegistrationController {
 	
+	private Mapper mapper = new Mapper();
+	
 	@Autowired
 	private RegistrationService service;
 
 	@GetMapping("/register/{id}")
-	public MappingJacksonValue getUser(@PathVariable String id) {
+	public UserGetResponse getUser(@PathVariable String id) {   //old return: MappingJacksonValue
+		
 		
 		User user = service.getUserbyId(id);
 		
+		return mapper.getDTO(user);
+		
+		//alternative solution:
+		/*
 		FilterProvider filter = new SimpleFilterProvider();
 		SimpleBeanPropertyFilter propertyFilter;
 		
@@ -39,9 +46,12 @@ public class RegistrationController {
 		value.setFilters(filter);
 		
 		return value;
-
+		*/
+			
 		
 	}
+	
+	//Not required:
 /*	
 	@GetMapping("/register/all")
 	public List<User> getAllUsers() {
@@ -49,15 +59,19 @@ public class RegistrationController {
 	}
 */	
 	@PostMapping("/register/add")
-	public MappingJacksonValue register(@RequestBody User newUser) {
+	public UserRegistrationResponse register(@RequestBody User newUser) {
 		
 		
 		service.addUser(newUser);
 		
+		return mapper.postDTO(newUser);
+		
+		//alternative solution:
+		/*
 		FilterProvider filter = new SimpleFilterProvider();
 		SimpleBeanPropertyFilter propertyFilter;
 		
-		if(!newUser.success) {
+		if(!newUser.isSuccess()) {
 			
 			propertyFilter = SimpleBeanPropertyFilter.filterOutAllExcept("success", "failDescription");		
 			
@@ -74,6 +88,8 @@ public class RegistrationController {
 		value.setFilters(filter);
 		
 		return value;
+		*/
+		
 		
 	}
 
