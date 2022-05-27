@@ -16,7 +16,15 @@ public class RegistrationService {
 	
 	public void addUser(User user){
 		
-		userRepository.save(user);
+		if(!userRepository.existsById(user.getUserName())) {
+			
+			userRepository.save(user);
+			user.success = true;
+			return;
+		}
+		
+		user.success = false;
+
 	}
 	
 	public User getUserbyId(String id) {
