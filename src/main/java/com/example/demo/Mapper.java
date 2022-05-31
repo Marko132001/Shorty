@@ -20,13 +20,14 @@ public class Mapper {
 	public UserRegistrationResponse postDTO(User user) {
 		
 		boolean success = user.isSuccess();
-		String description = user.getFailDescription();
-		String password = user.getPassword();
+		
 		
 		if(!user.isSuccess()) {
+			String description = user.getFailDescription();
 			return new UserRegistrationResponse(success, description);
 		}
 		
+		String password = user.getPassword();
 		return new UserRegistrationResponse(success, password);
 	}
 	
