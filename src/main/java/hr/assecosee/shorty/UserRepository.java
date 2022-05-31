@@ -1,4 +1,4 @@
-package com.example.demo;
+package hr.assecosee.shorty;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

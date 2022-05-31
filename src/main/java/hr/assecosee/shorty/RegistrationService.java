@@ -1,8 +1,7 @@
-package com.example.demo;
+package hr.assecosee.shorty;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,19 +10,25 @@ import org.springframework.stereotype.Service;
 public class RegistrationService {
 	
 	
-	@Autowired
 	private UserRepository userRepository;
 	
-	public void addUser(User user){
+	@Autowired
+	public RegistrationService(UserRepository userRepository) {
+		
+		this.userRepository = userRepository;
+	}
+	
+	public Optional<User> addUser(User user){
 		
 		if(!userRepository.existsById(user.getUserName())) {
 			
 			userRepository.save(user);
-			user.setSuccess(true);
-			return;
+			
+			return Optional.of(user);
 		}
 		
-		user.setSuccess(false);
+		
+		return Optional.empty();
 
 	}
 	
@@ -34,12 +39,6 @@ public class RegistrationService {
 
 	}
 
-	public List<User> getAllUsers() {
-		
-		List<User> users = new ArrayList<>();
-		userRepository.findAll().forEach(users::add);
-		
-		return users;
-	}
+
 	
 }

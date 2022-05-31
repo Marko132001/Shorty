@@ -1,19 +1,15 @@
-package com.example.demo;
+package hr.assecosee.shorty;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//import com.fasterxml.jackson.annotation.JsonFilter;
 
-//@JsonFilter("responseFilter")
 @Entity(name="users")
 public class User {
 	
 	@Id
 	private String userName;
 	private String password;
-	private boolean success;
-	private String failDescription = "Account username already exists!";
 
 
 	public User(String userName, String password) {
@@ -42,19 +38,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public boolean isSuccess() {
-		return success;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public String getFailDescription() {
-		return failDescription;
-	}
-
 
 	
 

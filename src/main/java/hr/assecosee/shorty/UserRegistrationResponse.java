@@ -1,4 +1,4 @@
-package com.example.demo;
+package hr.assecosee.shorty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
