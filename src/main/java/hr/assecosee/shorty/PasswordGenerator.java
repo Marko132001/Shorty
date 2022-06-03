@@ -2,17 +2,19 @@ package hr.assecosee.shorty;
 
 import java.util.Random;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 public class PasswordGenerator {
 	
 	private String generatedPassword;
+	private String hashedPassword;
 	private static Random random = new Random();
 	
 	public PasswordGenerator() {
 		
 		this.generatedPassword = randomPassword();
-		
+		this.hashedPassword = BCrypt.hashpw(generatedPassword, BCrypt.gensalt(10));
 	}
 	
 	
@@ -43,10 +45,17 @@ public class PasswordGenerator {
 	    return randomString;
 		
 	}
+	
+	
 
 
 	public String getGeneratedPassword() {
 		return generatedPassword;
+	}
+
+
+	public String getHashedPassword() {
+		return hashedPassword;
 	}
 	
 	

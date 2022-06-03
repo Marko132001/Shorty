@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hr.assecosee.shorty.PasswordGenerator;
 import hr.assecosee.shorty.User;
 import hr.assecosee.shorty.UserRepository;
 
@@ -23,9 +24,15 @@ public class RegistrationService {
 	
 	public Optional<User> addUser(User user){
 		
+		PasswordGenerator generatePassword = new PasswordGenerator();
+		
 		if(!userRepository.existsById(user.getUserName())) {
 			
+			user.setPassword(generatePassword.getHashedPassword());
+			
 			userRepository.save(user);
+			
+			user.setPassword(generatePassword.getGeneratedPassword());
 			
 			return Optional.of(user);
 		}

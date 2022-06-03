@@ -29,13 +29,13 @@ public class RegistrationController {
 	private RegistrationService service = new RegistrationService(userRepository);
 
 	@GetMapping("/register/{id}")
-	public UserGetResponse getUser(@PathVariable String id) { 
+	public User/*UserGetResponse*/ getUser(@PathVariable String id) { 
 		
 		
 		User user = service.getUserbyId(id);
 		
-		return mapper.getDTO(user);
-			
+		//return mapper.getDTO(user);
+		return user;
 		
 	}
 	
@@ -43,7 +43,6 @@ public class RegistrationController {
 	@PostMapping("/register/add")                    //UserGetResponse --> just userName input
 	public UserRegistrationResponse register(@RequestBody UserGetResponse newUser) {
 		
-		PasswordGenerator generatePassword = new PasswordGenerator();
 		User user = new User();
 		user.setUserName(newUser.getUserName());
 		
@@ -57,8 +56,7 @@ public class RegistrationController {
 			success = false;
 		}
 		else {
-			success = true;
-			user.setPassword(generatePassword.getGeneratedPassword());
+			success = true;		
 		}
 		
 		
