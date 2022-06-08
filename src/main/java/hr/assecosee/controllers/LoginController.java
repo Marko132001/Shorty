@@ -21,9 +21,12 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestBody User user) {
 		
-		if(loginService.authenticate(user)) {
+		User existingUser = loginService.authenticate(user);
+		
+		if(existingUser != null) {
 			
-			//add token to user
+			
+			existingUser.setToken(loginService.base64Encoding(user));
 			
 			return String.format("Welcome %s!", user.getUserName());
 		}

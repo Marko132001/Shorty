@@ -2,6 +2,7 @@ package hr.assecosee.services;
 
 import java.util.Optional;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class LoginService {
 	}
 	
 	
-	public boolean authenticate (User user) {
+	public User authenticate (User user) {
 			
 		Optional<User> existingUser = userRepository.findById(user.getUserName());
 		
@@ -31,12 +32,24 @@ public class LoginService {
 			
 			if(BCrypt.checkpw(user.getPassword(), existUser.getPassword())) {
 				
-				return true;
+				return existUser;
 			}		
 			
 		}
 		
-		return false;
+		return null;
+		
+	}
+	
+	public String base64Encoding (User user) {
+		
+		String token;
+		
+		token = user.getUserName() + ":" + user.getPassword();
+		
+		token = Base64.encodeBase64String(token.getBytes());
+		
+		return token;
 		
 	}
 

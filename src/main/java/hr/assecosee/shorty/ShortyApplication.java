@@ -13,6 +13,7 @@ public class ShortyApplication {
 		
 		SpringApplication.run(ShortyApplication.class, args);
 
+
 	}
 
 }

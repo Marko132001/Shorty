@@ -14,6 +14,8 @@ public class User {
 	private String userName;
 	private String password;
 	
+	@JsonIgnore
+	private String token;
 
 	public User(String userName, String password) {
 		super();
@@ -40,6 +42,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 
