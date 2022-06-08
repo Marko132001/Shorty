@@ -1,4 +1,4 @@
-package hr.assecosee.shorty;
+package hr.assecosee.controllers;
 
 
 
@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hr.assecosee.mappers.UserMapper;
 import hr.assecosee.services.RegistrationService;
+import hr.assecosee.shorty.User;
+import hr.assecosee.shorty.UserGetResponse;
+import hr.assecosee.shorty.UserRegistrationResponse;
+import hr.assecosee.shorty.UserRepository;
 
 
 
 @RestController
-@ComponentScan({"hr.assecosee.services"})
+@ComponentScan({"hr.assecosee.services", "hr.assecosee.shorty"})
 public class RegistrationController {
 	
 	private UserMapper mapper = new UserMapper();
