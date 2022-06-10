@@ -22,7 +22,7 @@ public class LoginService {
 	}
 	
 	
-	public User authenticate (User user) {
+	public boolean authenticate (User user) {
 			
 		Optional<User> existingUser = userRepository.findById(user.getUserName());
 		
@@ -32,12 +32,12 @@ public class LoginService {
 			
 			if(BCrypt.checkpw(user.getPassword(), existUser.getPassword())) {
 				
-				return existUser;
+				return true;
 			}		
 			
 		}
 		
-		return null;
+		return false;
 		
 	}
 	
@@ -49,8 +49,13 @@ public class LoginService {
 		
 		token = Base64.encodeBase64String(token.getBytes());
 		
+		
+		
 		return token;
 		
 	}
+	
+
+
 
 }

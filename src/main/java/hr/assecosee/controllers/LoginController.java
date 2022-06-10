@@ -12,6 +12,8 @@ import hr.assecosee.shorty.UserRepository;
 @RestController
 public class LoginController {
 	
+	private static String token;
+	
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -21,17 +23,22 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestBody User user) {
 		
-		User existingUser = loginService.authenticate(user);
 		
-		if(existingUser != null) {
+		if(loginService.authenticate(user)) {
 			
 			
-			existingUser.setToken(loginService.base64Encoding(user));
+			token = loginService.base64Encoding(user);
+			
 			
 			return String.format("Welcome %s!", user.getUserName());
 		}
 		
 		return "Invalid username or password!";
+	}
+
+
+	public static String getToken() {
+		return token;
 	}
 
 }
