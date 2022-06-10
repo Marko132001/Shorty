@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RestController;
+
 
 import hr.assecosee.shorty.Shorty;
 
@@ -23,10 +25,8 @@ public class ShortyController {
 	@PostMapping("/shorty")
 	public Shorty shorting(@RequestBody Shorty shorty) {
 		
-		//implement url shorting
-		//return --> success: shortURL, failure: description
 		
-		
+
 		return shorty;
 		
 	}

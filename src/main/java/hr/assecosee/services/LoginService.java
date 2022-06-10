@@ -13,6 +13,8 @@ import hr.assecosee.shorty.UserRepository;
 @Service
 public class LoginService {
 	
+	private static User existUser;
+	
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -28,7 +30,7 @@ public class LoginService {
 		
 		if(existingUser.isPresent()) {
 			
-			User existUser = existingUser.get();
+			existUser = existingUser.get();
 			
 			if(BCrypt.checkpw(user.getPassword(), existUser.getPassword())) {
 				
@@ -53,6 +55,11 @@ public class LoginService {
 		
 		return token;
 		
+	}
+
+
+	public static User getExistUser() {
+		return existUser;
 	}
 	
 
