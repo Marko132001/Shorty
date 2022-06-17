@@ -30,7 +30,7 @@ public class LoginController {
 			token = loginService.base64Encoding(user);
 			
 			
-			return String.format("Welcome %s!", user.getUserName());
+			return String.format("Welcome %s!\nToken: %s", user.getUserName(), LoginController.getToken());
 		}
 		
 		return "Invalid username or password!";

@@ -1,5 +1,6 @@
 package hr.assecosee.shorty;
 
+
 public class Shorty {
 	
 	private String url;

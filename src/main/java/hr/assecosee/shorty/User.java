@@ -5,7 +5,6 @@ import javax.persistence.Id;
 
 
 
-
 @Entity(name="users")
 public class User {
 	
@@ -40,7 +39,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	
 
