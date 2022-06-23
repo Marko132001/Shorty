@@ -32,7 +32,7 @@ public class RegistrationController {
 	@Autowired
 	private RegistrationService service = new RegistrationService(userRepository);
 
-	@GetMapping("/register/{id}")
+	@GetMapping("/shorty/register/{id}")
 	public User/*UserGetResponse*/ getUser(@PathVariable String id) { 
 		
 		
@@ -44,7 +44,7 @@ public class RegistrationController {
 	}
 	
 
-	@PostMapping("/register/add")                    //UserGetResponse --> just userName input
+	@PostMapping("/shorty/register/add")                    //UserGetResponse --> just userName input
 	public UserRegistrationResponse register(@RequestBody UserGetResponse newUser) {
 		
 		User user = new User();

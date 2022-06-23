@@ -1,12 +1,27 @@
 package hr.assecosee.services;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Service;
 
 import hr.assecosee.shorty.Shorty;
-import hr.assecosee.shorty.ShortyResponse;
+import hr.assecosee.shorty.UrlKeyValue;
+import hr.assecosee.shorty.UrlRepository;
 
+@Service
 public class ShortyServices {
+	
+	private UrlRepository urlRepository;
+	
+	@Autowired
+	public ShortyServices(UrlRepository urlRepository) {
+		
+		this.urlRepository = urlRepository;
+	}
 	
 	public boolean checkToken(String header) {
 		
@@ -43,12 +58,24 @@ public class ShortyServices {
 	}
 	
 	
-	public ShortyResponse shortUrl(Shorty shorty) {
+	public String shortUrl(Shorty shorty) throws NoSuchAlgorithmException {
 		
-		ShortyResponse ret = new ShortyResponse(shorty.getUrl(), true);
-		//Shorting URL implementation
 		
-		return ret;
+		String originalUrl = shorty.getUrl();
+		
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		
+		byte[] hash = digest.digest(originalUrl.getBytes());
+		
+		int charNum = 7;
+		
+		String encodedHash = Base64.encodeBase64String(hash).substring(0, charNum);
+		
+		UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash);
+		
+		urlRepository.save(url);
+		
+		return encodedHash;
 		
 	}
 	

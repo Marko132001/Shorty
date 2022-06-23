@@ -20,7 +20,7 @@ public class LoginController {
 	private LoginService loginService = new LoginService(userRepository);
 	
 	
-	@PostMapping("/login")
+	@PostMapping("/shorty/login")
 	public String login(@RequestBody User user) {
 		
 		
