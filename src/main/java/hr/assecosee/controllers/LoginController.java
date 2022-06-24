@@ -1,5 +1,7 @@
 package hr.assecosee.controllers;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +22,11 @@ public class LoginController {
 	private LoginService loginService = new LoginService(userRepository);
 	
 	
-	@PostMapping("/shorty/login")
+	@PostMapping("/login")
 	public String login(@RequestBody User user) {
 		
 		
 		if(loginService.authenticate(user)) {
-			
 			
 			token = loginService.base64Encoding(user);
 			

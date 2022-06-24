@@ -3,17 +3,23 @@ package hr.assecosee.controllers;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import hr.assecosee.services.ShortyServices;
 import hr.assecosee.shorty.Shorty;
 import hr.assecosee.shorty.ShortyResponse;
+import hr.assecosee.shorty.UrlKeyValue;
 import hr.assecosee.shorty.UrlRepository;
 
 @RestController
@@ -27,25 +33,52 @@ public class ShortyController {
 	
 
 	
-	@PostMapping("/shorty/short")
-	public ShortyResponse shorting(@RequestBody Shorty shorty, @RequestHeader("Authorization") String token) throws NoSuchAlgorithmException {
+	@PostMapping("/short")
+	public ShortyResponse shorting(@RequestBody Shorty shorty, 
+								@RequestHeader("Authorization") String token, HttpServletRequest request) throws NoSuchAlgorithmException {
 		
+		ShortyResponse ret;
 		
 		if(shortyService.checkToken(token)) {
 			
+			if(shortyService.isValid(shorty.getUrl())) {
+						
+				String rootContext = request.getContextPath();
+				
+				String shortUrl = shortyService.shortUrl(shorty);
+				
+				ret = new ShortyResponse(rootContext + "/" + shortUrl, true);
+				
+				return ret;		
+			}
 			
-			String shortUrl = shortyService.shortUrl(shorty);
+			ret = new ShortyResponse("Invalid URL", false);
 			
-			ShortyResponse success = new ShortyResponse(shortUrl, true);
+			return ret;
 			
-			return success;
 		}
 		
-		ShortyResponse failure = new ShortyResponse("Invalid token", false);
+		ret = new ShortyResponse("Invalid token", false);
 		
-		return failure;
+		return ret;
 		
 	}
+	
+	@GetMapping("/{shortUrl}")
+	public void redirect(@PathVariable String shortUrl, HttpServletResponse response) {
+		
+		UrlKeyValue link = shortyService.exists(shortUrl);
+		
+		if(!link.equals(null)) {
+			
+			response.setHeader("Location", link.getOriginalUrl());
+			response.setStatus(link.getRedirectType());
+		}
+		
+		
+		
+	}
+	
 	
 
 }

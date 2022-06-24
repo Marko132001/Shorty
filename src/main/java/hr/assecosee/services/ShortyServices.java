@@ -2,6 +2,7 @@ package hr.assecosee.services;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.net.URL;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import hr.assecosee.shorty.UrlRepository;
 public class ShortyServices {
 	
 	private UrlRepository urlRepository;
+
 	
 	@Autowired
 	public ShortyServices(UrlRepository urlRepository) {
@@ -71,13 +73,39 @@ public class ShortyServices {
 		
 		String encodedHash = Base64.encodeBase64String(hash).substring(0, charNum);
 		
-		UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash);
-		
-		urlRepository.save(url);
+		if(!urlRepository.existsById(originalUrl)) {
+			
+			UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash, shorty.getRedirectType());
+			
+			urlRepository.save(url);
+		}
+			
 		
 		return encodedHash;
 		
 	}
+	
+	
+	public UrlKeyValue exists(String shortUrl) {
+		
+		UrlKeyValue ret = urlRepository.findById(shortUrl).orElse(null);
+			
+		return ret;
+		
+	}
+	
+	
+	 public boolean isValid(String url){
+	        
+	        try {
+	            new URL(url).toURI();
+	            return true;
+	        }
+	        catch (Exception e) {
+	            return false;
+	        }
+	        
+	 }
 	
 	
 

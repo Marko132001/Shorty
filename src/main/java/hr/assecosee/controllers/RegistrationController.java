@@ -5,6 +5,7 @@ package hr.assecosee.controllers;
 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,19 +33,19 @@ public class RegistrationController {
 	@Autowired
 	private RegistrationService service = new RegistrationService(userRepository);
 
-	@GetMapping("/shorty/register/{id}")
-	public User/*UserGetResponse*/ getUser(@PathVariable String id) { 
+	@GetMapping("/register/{id}")
+	public User getUser(@PathVariable String id) { 
 		
-		
+
 		User user = service.getUserbyId(id);
 		
-		//return mapper.getDTO(user);
+
 		return user;
 		
 	}
 	
 
-	@PostMapping("/shorty/register/add")                    //UserGetResponse --> just userName input
+	@PostMapping("/register/add")                    
 	public UserRegistrationResponse register(@RequestBody UserGetResponse newUser) {
 		
 		User user = new User();

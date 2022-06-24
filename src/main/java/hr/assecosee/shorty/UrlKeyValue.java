@@ -7,14 +7,16 @@ import javax.persistence.Id;
 public class UrlKeyValue {
 	
 	@Id
-	private String originalUrl;
 	private String shortUrl;
+	private String originalUrl;
+	private int redirectType;
 	
-	public UrlKeyValue(String originalUrl, String shortUrl) {
+	public UrlKeyValue(String originalUrl, String shortUrl, int redirectType) {
 		
 		super();
 		this.originalUrl = originalUrl;
 		this.shortUrl = shortUrl;
+		this.redirectType = redirectType;
 	}
 	
 	public UrlKeyValue() {
@@ -36,4 +38,14 @@ public class UrlKeyValue {
 	public void setShortUrl(String shortUrl) {
 		this.shortUrl = shortUrl;
 	}
+
+	public int getRedirectType() {
+		return redirectType;
+	}
+
+	public void setRedirectType(int redirectType) {
+		this.redirectType = redirectType;
+	}
+
+
 }
