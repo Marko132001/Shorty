@@ -65,31 +65,37 @@ public class ShortyServices {
 		
 		String originalUrl = shorty.getUrl();
 		
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		String userName = LoginService.getExistUser().getUserName();
 		
-		byte[] hash = digest.digest(originalUrl.getBytes());
+		UrlKeyValue findUrl = urlRepository.findByoriginalUrlAndUserName(originalUrl, userName);
 		
-		int charNum = 7;
-		
-		String encodedHash = Base64.encodeBase64String(hash).substring(0, charNum);
-		
-		if(!urlRepository.existsById(originalUrl)) {
+		if(findUrl == null) {
 			
-			UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash, shorty.getRedirectType());
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			
+			byte[] hash = digest.digest(originalUrl.getBytes());
+			
+			int charNum = 7;
+			
+			String encodedHash = Base64.encodeBase64String(hash).substring(0, charNum);
+			
+			UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash, shorty.getRedirectType(), userName);
 			
 			urlRepository.save(url);
+			
+			return encodedHash;
 		}
 			
 		
-		return encodedHash;
+		return findUrl.getShortUrl();
 		
 	}
 	
 	
 	public UrlKeyValue exists(String shortUrl) {
 		
-		UrlKeyValue ret = urlRepository.findById(shortUrl).orElse(null);
-			
+		
+		UrlKeyValue ret = urlRepository.findByshortUrlAndUserName(shortUrl, LoginService.getExistUser().getUserName());
 		return ret;
 		
 	}

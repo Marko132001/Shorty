@@ -1,22 +1,32 @@
 package hr.assecosee.shorty;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity(name="url")
-public class UrlKeyValue {
+@IdClass(UrlKeyValue.class)
+public class UrlKeyValue implements Serializable{
+	
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
+	private String UserName;
 	private String shortUrl;
+	@Id
 	private String originalUrl;
 	private int redirectType;
 	
-	public UrlKeyValue(String originalUrl, String shortUrl, int redirectType) {
+	public UrlKeyValue(String originalUrl, String shortUrl, int redirectType, String UserName) {
 		
 		super();
 		this.originalUrl = originalUrl;
 		this.shortUrl = shortUrl;
 		this.redirectType = redirectType;
+		this.UserName = UserName;
 	}
 	
 	public UrlKeyValue() {
@@ -45,6 +55,14 @@ public class UrlKeyValue {
 
 	public void setRedirectType(int redirectType) {
 		this.redirectType = redirectType;
+	}
+
+	public String getUserName() {
+		return UserName;
+	}
+
+	public void setUserName(String UserName) {
+		this.UserName = UserName;
 	}
 
 
