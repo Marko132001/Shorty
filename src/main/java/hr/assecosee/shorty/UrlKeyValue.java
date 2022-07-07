@@ -19,14 +19,16 @@ public class UrlKeyValue implements Serializable{
 	@Id
 	private String originalUrl;
 	private int redirectType;
+	private int numberOfRedirects;
 	
-	public UrlKeyValue(String originalUrl, String shortUrl, int redirectType, String UserName) {
+	public UrlKeyValue(String originalUrl, String shortUrl, int redirectType, String UserName, int numberOfRedirects) {
 		
 		super();
 		this.originalUrl = originalUrl;
 		this.shortUrl = shortUrl;
 		this.redirectType = redirectType;
 		this.UserName = UserName;
+		this.numberOfRedirects = numberOfRedirects;
 	}
 	
 	public UrlKeyValue() {
@@ -63,6 +65,14 @@ public class UrlKeyValue implements Serializable{
 
 	public void setUserName(String UserName) {
 		this.UserName = UserName;
+	}
+
+	public int getNumberOfRedirects() {
+		return numberOfRedirects;
+	}
+
+	public void setNumberOfRedirects(int numberOfRedirects) {
+		this.numberOfRedirects = numberOfRedirects;
 	}
 
 

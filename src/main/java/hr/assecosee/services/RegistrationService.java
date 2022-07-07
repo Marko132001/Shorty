@@ -22,6 +22,7 @@ public class RegistrationService {
 		this.userRepository = userRepository;
 	}
 	
+	
 	public Optional<User> addUser(User user){
 		
 		PasswordGenerator generatePassword = new PasswordGenerator();

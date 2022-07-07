@@ -25,6 +25,10 @@ public class ShortyServices {
 		this.urlRepository = urlRepository;
 	}
 	
+	public ShortyServices() {
+		
+	}
+	
 	public boolean checkToken(String header) {
 		
 		
@@ -68,8 +72,9 @@ public class ShortyServices {
 		String userName = LoginService.getExistUser().getUserName();
 		
 		UrlKeyValue findUrl = urlRepository.findByoriginalUrlAndUserName(originalUrl, userName);
+			
 		
-		if(findUrl == null) {
+		if(findUrl == null) {	
 			
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			
@@ -79,11 +84,17 @@ public class ShortyServices {
 			
 			String encodedHash = Base64.encodeBase64String(hash).substring(0, charNum);
 			
-			UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash, shorty.getRedirectType(), userName);
+			UrlKeyValue url = new UrlKeyValue(originalUrl, encodedHash, shorty.getRedirectType(), userName, 1);
 			
 			urlRepository.save(url);
 			
+			
 			return encodedHash;
+		}
+		else {			
+			
+			urlRepository.updateNumberOfRedirects(originalUrl, userName, findUrl.getNumberOfRedirects() + 1);
+			
 		}
 			
 		
