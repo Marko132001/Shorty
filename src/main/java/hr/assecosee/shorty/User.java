@@ -3,8 +3,6 @@ package hr.assecosee.shorty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
-
 @Entity(name="users")
 public class User {
 	
@@ -23,7 +21,7 @@ public class User {
 		
 	}
 
-
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -39,7 +37,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	
 
 }

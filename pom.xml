@@ -8,10 +8,10 @@
 		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>hr.asseco</groupId>
+	<artifactId>shorty</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>shorty</name>
 	<description>Demo project for Spring Boot</description>
 	
 	<properties>
@@ -29,6 +29,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			
+			<exclusions>
+			    <exclusion>
+			      <groupId>junit</groupId>
+			      <artifactId>junit</artifactId>
+			    </exclusion>
+  			</exclusions>		
+			
 		</dependency>
 		
 		<dependency>
@@ -51,6 +59,36 @@
 		    <groupId>org.bouncycastle</groupId>
 		    <artifactId>bcprov-jdk15on</artifactId>
 		    <version>1.60</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.rest-assured</groupId>
+		    <artifactId>rest-assured</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			 <groupId>org.junit.jupiter</groupId>
+			 <artifactId>junit-jupiter-api</artifactId>
+			 <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			  <groupId>org.junit.jupiter</groupId>
+			  <artifactId>junit-jupiter-engine</artifactId>
+			  <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			  <groupId>org.junit.platform</groupId>
+			  <artifactId>junit-platform-launcher</artifactId>
+			  <scope>test</scope>
 		</dependency>
 
 	</dependencies>

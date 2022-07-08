@@ -14,7 +14,7 @@ import hr.assecosee.shorty.UserRepository;
 public class RegistrationService {
 	
 	
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 	@Autowired
 	public RegistrationService(UserRepository userRepository) {
@@ -43,13 +43,12 @@ public class RegistrationService {
 
 	}
 	
-	public User getUserbyId(String id) {
+	public User getUserById(String id) {
 		
 			
 		return userRepository.findById(id).orElse(null);
 
 	}
-
 
 	
 }

@@ -7,9 +7,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class PasswordGenerator {
 	
-	private String generatedPassword;
-	private String hashedPassword;
-	private static Random random = new Random();
+	private final String generatedPassword;
+	private final String hashedPassword;
+	private static final Random random = new Random();
 	
 	public PasswordGenerator() {
 		
@@ -40,14 +40,10 @@ public class PasswordGenerator {
 	    	sb.append(randomChar);
 	    }
 	    
-	    String randomString = sb.toString();
-	    
-	    return randomString;
+	    return sb.toString();
 		
 	}
 	
-	
-
 
 	public String getGeneratedPassword() {
 		return generatedPassword;
@@ -57,7 +53,6 @@ public class PasswordGenerator {
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
-	
 	
 
 }
