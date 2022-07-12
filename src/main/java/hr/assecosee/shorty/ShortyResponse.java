@@ -2,6 +2,11 @@ package hr.assecosee.shorty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShortyResponse {
 	
@@ -18,26 +23,6 @@ public class ShortyResponse {
 		else {
 			this.description = output;
 		}
-	}
-
-
-	public String getShortUrl() {
-		return shortUrl;
-	}
-
-
-	public void setShortUrl(String shortUrl) {
-		this.shortUrl = shortUrl;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 }

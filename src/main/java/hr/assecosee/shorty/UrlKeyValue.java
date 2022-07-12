@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity(name="url")
 @IdClass(UrlKeyValue.class)
 public class UrlKeyValue implements Serializable{
@@ -34,46 +39,5 @@ public class UrlKeyValue implements Serializable{
 	public UrlKeyValue() {
 		
 	}
-
-	public String getOriginalUrl() {
-		return originalUrl;
-	}
-
-	public void setOriginalUrl(String originalUrl) {
-		this.originalUrl = originalUrl;
-	}
-
-	public String getShortUrl() {
-		return shortUrl;
-	}
-
-	public void setShortUrl(String shortUrl) {
-		this.shortUrl = shortUrl;
-	}
-
-	public int getRedirectType() {
-		return redirectType;
-	}
-
-	public void setRedirectType(int redirectType) {
-		this.redirectType = redirectType;
-	}
-
-	public String getUserName() {
-		return UserName;
-	}
-
-	public void setUserName(String UserName) {
-		this.UserName = UserName;
-	}
-
-	public int getNumberOfRedirects() {
-		return numberOfRedirects;
-	}
-
-	public void setNumberOfRedirects(int numberOfRedirects) {
-		this.numberOfRedirects = numberOfRedirects;
-	}
-
 
 }

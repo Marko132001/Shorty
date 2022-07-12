@@ -1,6 +1,10 @@
 package hr.assecosee.shorty;
 
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserGetResponse {
 	
 	private String userName;
@@ -13,11 +17,4 @@ public class UserGetResponse {
 		
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 }

@@ -2,6 +2,11 @@ package hr.assecosee.shorty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRegistrationResponse {
 	
@@ -22,19 +27,4 @@ public class UserRegistrationResponse {
 		
 	}
 
-	public boolean isSuccess() {
-		return success;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-	
-	public String getFailDescription() {
-		return failDescription;
-	}
-
-	public String getPassword() {
-		return password;
-	}
 }

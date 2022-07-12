@@ -13,17 +13,15 @@ import hr.assecosee.services.RegistrationService;
 import hr.assecosee.shorty.User;
 import hr.assecosee.shorty.UserGetResponse;
 import hr.assecosee.shorty.UserRegistrationResponse;
-import hr.assecosee.shorty.UserRepository;
 
 @RestController
 @ComponentScan({"hr.assecosee.services", "hr.assecosee.shorty"})
 public class RegistrationController {
 	
 	private UserMapper mapper = new UserMapper();
-	private UserRepository userRepository;
 	
 	@Autowired
-	private RegistrationService service = new RegistrationService(userRepository);
+	private RegistrationService service;
 
 	@GetMapping("/register/{id}")
 	public User getUser(@PathVariable String id) { 	

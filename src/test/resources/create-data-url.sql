@@ -1,0 +1,2 @@
+INSERT INTO url (ORIGINAL_URL, USER_NAME, NUMBER_OF_REDIRECTS, REDIRECT_TYPE, SHORT_URL) VALUES ('https://www.overleaf.com/login', 'Marko132001', '1', '301', '1Japh8h');
+INSERT INTO url (ORIGINAL_URL, USER_NAME, NUMBER_OF_REDIRECTS, REDIRECT_TYPE, SHORT_URL) VALUES ('https://stackoverflow.com/questions/26550124/spring-returning-empty-http-responses-with-responseentityvoid-doesnt-work', 'Marko123', '1', '302', 'qGmjdJ6');

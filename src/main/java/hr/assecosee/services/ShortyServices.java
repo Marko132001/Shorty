@@ -16,7 +16,7 @@ import hr.assecosee.shorty.UrlRepository;
 @Service
 public class ShortyServices {
 	
-	private UrlRepository urlRepository;
+	private final UrlRepository urlRepository;
 
 	
 	@Autowired
@@ -24,33 +24,34 @@ public class ShortyServices {
 		
 		this.urlRepository = urlRepository;
 	}
-	
+
 	public ShortyServices() {
+		this.urlRepository = null;
 		
 	}
 	
 	public boolean checkToken(String header) {
 		
 		
-		if(!LoginService.getExistUser().equals(null)) {
+		if(LoginService.getExistUser() != null) {
 				
 			StringBuilder sb = new StringBuilder("Bearer");
 			
-			String[] list_split;	
+			String[] listSplit;	
 			
-			list_split = header.split(" ");
+			listSplit = header.split(" ");
 			
 			
-			if(list_split[0].contentEquals(sb) && list_split.length == 2) {
+			if(listSplit[0].contentEquals(sb) && listSplit.length == 2) {
 				
-				String[] name_password;
+				String[] namePasswordBuffer;
 				
-				String decodedBase64 = new String(Base64.decodeBase64(list_split[1].getBytes()));
+				String decodedBase64 = new String(Base64.decodeBase64(listSplit[1].getBytes()));
 
-				name_password = decodedBase64.split(":");			
+				namePasswordBuffer = decodedBase64.split(":");			
 
-				if(name_password[0].contains(LoginService.getExistUser().getUserName()) && 
-						BCrypt.checkpw(name_password[1], LoginService.getExistUser().getPassword())) {
+				if(namePasswordBuffer[0].contains(LoginService.getExistUser().getUserName()) && 
+						BCrypt.checkpw(namePasswordBuffer[1], LoginService.getExistUser().getPassword())) {
 					
 					
 					return true;

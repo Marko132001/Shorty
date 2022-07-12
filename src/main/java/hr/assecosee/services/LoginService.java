@@ -43,7 +43,7 @@ public class LoginService {
 		
 	}
 	
-	public String base64Encoding (User user) {
+	public static String base64Encoding (User user) {
 		
 		String token;
 		
@@ -61,8 +61,11 @@ public class LoginService {
 	public static User getExistUser() {
 		return existUser;
 	}
-	
 
+
+	public static void setExistUser(User existUser) {
+		LoginService.existUser = existUser;
+	}
 
 
 }

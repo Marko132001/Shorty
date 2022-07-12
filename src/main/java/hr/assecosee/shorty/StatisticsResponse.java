@@ -4,10 +4,15 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StatisticsResponse {
 	
-	private HashMap<String, Integer> pairList = null;
+	private HashMap<String, Integer> pairList = new HashMap<String, Integer>();
 	private String description = null;
 	
 	public StatisticsResponse(HashMap<String, Integer> pairList, boolean check) {
@@ -22,18 +27,5 @@ public class StatisticsResponse {
 		}
 		
 	}
-
-	public HashMap<String, Integer> getPairList() {
-		return pairList;
-	}
-
-	public void setPairList(HashMap<String, Integer> pairList) {
-		this.pairList = pairList;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
 	
 }

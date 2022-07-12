@@ -3,6 +3,11 @@ package hr.assecosee.shorty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity(name="users")
 public class User {
 	
@@ -19,23 +24,6 @@ public class User {
 	
 	public User() {
 		
-	}
-
-	
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import hr.assecosee.services.ShortyServices;
 import hr.assecosee.services.StatisticsService;
 import hr.assecosee.shorty.StatisticsResponse;
-import hr.assecosee.shorty.UrlRepository;
 
 @RestController
 @ComponentScan({"hr.assecosee.services", "hr.assecosee.shorty"})
@@ -17,28 +16,26 @@ public class StatisticsController {
 	
 	private ShortyServices shortService = new ShortyServices();
 	
-	private UrlRepository urlRepository;
-	
 	@Autowired
-	private StatisticsService statService = new StatisticsService(urlRepository);
+	private StatisticsService statService;
 	
 	@GetMapping("/statistics")
 	public StatisticsResponse getStatistic(@RequestHeader("Authorization") String token) {
 		
-		StatisticsResponse retStat;
+		StatisticsResponse returnStatistics;
 		
 		if(shortService.checkToken(token)) {
 			
-			retStat = statService.getStatistic();
+			returnStatistics = statService.getStatistic();
 			
-			return retStat;
+			return returnStatistics;
 			
 		}
 		
 		
-		retStat = new StatisticsResponse(null, false);
+		returnStatistics = new StatisticsResponse(null, false);
 		
-		return retStat;
+		return returnStatistics;
 		
 	}
 	

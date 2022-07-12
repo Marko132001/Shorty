@@ -1,8 +1,6 @@
 package hr.assecosee.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,7 @@ import hr.assecosee.shorty.UrlRepository;
 public class StatisticsService {
 	
 	
-	private UrlRepository urlRepository;
+	private final UrlRepository urlRepository;
 	
 	@Autowired
 	public StatisticsService(UrlRepository urlRepository) {
@@ -30,22 +28,16 @@ public class StatisticsService {
 		
 		String userName = LoginService.getExistUser().getUserName();
 		
-		List<UrlKeyValue> listUrl = new ArrayList<>();
-		
-		listUrl = urlRepository.findAllByUserName(userName);
-		
 		HashMap<String, Integer> pair = new HashMap<>();
 		
-		for(UrlKeyValue var : listUrl) {
+		for(UrlKeyValue pairElement : urlRepository.findAllByUserName(userName)) {
 			
-			pair.put(var.getOriginalUrl(), var.getNumberOfRedirects());		
+			pair.put(pairElement.getOriginalUrl(), pairElement.getNumberOfRedirects());		
 			
 		}
 		
 		
-		StatisticsResponse retStat = new StatisticsResponse(pair, true);
-		
-		return retStat;
+		return new StatisticsResponse(pair, true);
 
 	}
 	

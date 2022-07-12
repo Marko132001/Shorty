@@ -30,7 +30,6 @@ public class ShortyController {
 	
 	@Autowired
 	private ShortyServices shortyService = new ShortyServices(urlRepository);
-	
 
 	
 	@PostMapping("/short")
@@ -39,37 +38,39 @@ public class ShortyController {
 		
 		ShortyResponse ret;
 		
-		if(shortyService.checkToken(token)) {
+		if(!shortyService.checkToken(token)) {
 			
-			if(shortyService.isValid(shorty.getUrl())) {
-						
-				String rootContext = request.getContextPath();
-				
-				String shortUrl = shortyService.shortUrl(shorty);
-				
-				ret = new ShortyResponse(rootContext + "/" + shortUrl, true);
-				
-				return ret;		
-			}
-			
-			ret = new ShortyResponse("Invalid URL", false);
+			ret = new ShortyResponse("Invalid token", false);
 			
 			return ret;
 			
 		}
+			
 		
-		ret = new ShortyResponse("Invalid token", false);
+		if(shortyService.isValid(shorty.getUrl())) {
+			
+			String rootContext = request.getContextPath();
+			
+			String shortUrl = shortyService.shortUrl(shorty);
+			
+			ret = new ShortyResponse(rootContext + "/" + shortUrl, true);
+			
+			return ret;		
+		}
+		
+		ret = new ShortyResponse("Invalid URL", false);
 		
 		return ret;
 		
 	}
+	
 	
 	@GetMapping("/{shortUrl}")
 	public void redirect(@PathVariable String shortUrl, HttpServletResponse response) {
 		
 		UrlKeyValue link = shortyService.exists(shortUrl);
 		
-		if(!link.equals(null)) {
+		if(link != null) {
 			
 			response.setHeader("Location", link.getOriginalUrl());
 			response.setStatus(link.getRedirectType());
