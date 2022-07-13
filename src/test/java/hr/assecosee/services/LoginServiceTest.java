@@ -33,18 +33,20 @@ class LoginServiceTest {
 	void testAuthenticate() {
 		
 		User user = new User("Marko", "tjiwrfmnlo");
+		User databaseUser = new User("Marko", BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
 		
-		String originalPassword = user.getPassword();
+		when(userRepository.findById(databaseUser.getUserName())).thenReturn(Optional.of(databaseUser));
 		
-		user.setPassword(BCrypt.hashpw(originalPassword, BCrypt.gensalt(10)));
+		assertTrue(loginService.authenticate(user));
 		
-		when(userRepository.findById(user.getUserName())).thenReturn(Optional.of(user));
+	}
+	
+	@Test
+	void testBase64Encoding() {
 		
-		user.setPassword(originalPassword);
+		User user = new User("Marko", "tjiwrfmnlo");
 		
-		boolean retval = loginService.authenticate(user);
-		
-		assertTrue(retval);
+		assertEquals("TWFya286dGppd3JmbW5sbw==", LoginService.base64Encoding(user));
 		
 	}
 

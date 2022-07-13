@@ -22,7 +22,7 @@ import hr.assecosee.shorty.ShortyResponse;
 import hr.assecosee.shorty.User;
 
 @SpringBootTest(classes = ShortyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ShortyControllerIntegrationTest {
+public class ShortyControllerIntegrationTest {
 
 	@LocalServerPort
 	private int port;

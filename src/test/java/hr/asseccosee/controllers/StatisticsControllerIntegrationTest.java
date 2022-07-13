@@ -3,6 +3,8 @@ package hr.asseccosee.controllers;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,13 +24,13 @@ import hr.assecosee.shorty.User;
 @SpringBootTest(classes = ShortyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/create-data-url.sql")
 @Sql(scripts = "/cleanup-data-url.sql", executionPhase = AFTER_TEST_METHOD)
-class StatisticsControllerIntegrationTest {
+public class StatisticsControllerIntegrationTest {
 
 	@LocalServerPort
 	private int port;
 	
 	@Autowired
-	private TestRestTemplate restTemplate;
+	private TestRestTemplate restTemplate;	
 	
 	@Test
 	public void testGetStatistic() {
@@ -45,11 +47,14 @@ class StatisticsControllerIntegrationTest {
 		ResponseEntity<StatisticsResponse> res = this.restTemplate
 				.exchange("http://localhost:" + port + "/shorty/statistics", HttpMethod.GET, request, StatisticsResponse.class);
 		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("https://www.overleaf.com/login", 1);
+		
+		
+		
 		assertEquals(200, res.getStatusCodeValue());
-		assertEquals("Invalid token", res.getBody().getDescription());
-		
-		
-		
+		assertTrue(res.getBody().getPairList().equals(map));
+
 	}
 
 }

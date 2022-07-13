@@ -19,7 +19,7 @@ public class UrlKeyValue implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String UserName;
+	private String userName;
 	private String shortUrl;
 	@Id
 	private String originalUrl;
@@ -32,7 +32,7 @@ public class UrlKeyValue implements Serializable{
 		this.originalUrl = originalUrl;
 		this.shortUrl = shortUrl;
 		this.redirectType = redirectType;
-		this.UserName = UserName;
+		this.userName = UserName;
 		this.numberOfRedirects = numberOfRedirects;
 	}
 	

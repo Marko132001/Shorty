@@ -18,7 +18,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 @SpringBootTest(classes = ShortyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/create-data-users.sql")
 @Sql(scripts = "/cleanup-data-users.sql", executionPhase = AFTER_TEST_METHOD)
-class LoginControllerIntegrationTest {
+public class LoginControllerIntegrationTest {
 
 	@LocalServerPort
 	private int port;

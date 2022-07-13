@@ -1,7 +1,11 @@
 package hr.assecosee.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,8 +37,7 @@ class RegistrationServiceTest {
 		
 		User user = new User("Marko", "");
 		
-		assertEquals(0, user.getPassword().length());
-		assertEquals("Marko", user.getUserName());
+		//User doesn't exist:
 		
 		registrationService.addUser(user);
 		
@@ -47,7 +50,14 @@ class RegistrationServiceTest {
 		
 		assertEquals(10, capturedUser.getPassword().length());
 		assertEquals("Marko", capturedUser.getUserName());
-	
+		
+		//User exists in database:
+		
+		when(userRepository.existsById(user.getUserName())).thenReturn(true);
+		
+		Optional<User> optional = registrationService.addUser(user);
+		
+		assertTrue(optional.isEmpty());
 		
 	}
 
