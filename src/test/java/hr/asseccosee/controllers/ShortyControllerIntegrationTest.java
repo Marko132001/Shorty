@@ -22,6 +22,8 @@ import hr.assecosee.shorty.ShortyResponse;
 import hr.assecosee.shorty.User;
 
 @SpringBootTest(classes = ShortyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = "/create-data-url.sql")
+@Sql(scripts = "/cleanup-data-url.sql", executionPhase = AFTER_TEST_METHOD)
 public class ShortyControllerIntegrationTest {
 
 	@LocalServerPort
@@ -76,8 +78,7 @@ public class ShortyControllerIntegrationTest {
 		
 	}
 	
-	@Sql(scripts = "/create-data-url.sql")
-	@Sql(scripts = "/cleanup-data-url.sql", executionPhase = AFTER_TEST_METHOD)
+
 	@Test
 	public void testRedirect() throws Exception {
 		

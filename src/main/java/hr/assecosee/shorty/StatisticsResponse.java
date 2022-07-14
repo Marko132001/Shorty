@@ -21,11 +21,14 @@ public class StatisticsResponse {
 		if(check) {
 			
 			this.pairList = pairList;
-			this.pairList.putAll(pairList);
 		}
 		else {
 			this.description = "Invalid token";
 		}
+		
+	}
+	
+	public StatisticsResponse() {
 		
 	}
 	

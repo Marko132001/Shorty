@@ -22,7 +22,7 @@ public class StatisticsController {
 	@GetMapping("/statistics")
 	public StatisticsResponse getStatistic(@RequestHeader("Authorization") String token) {
 		
-		StatisticsResponse returnStatistics;
+		StatisticsResponse returnStatistics = new StatisticsResponse();
 		
 		if(shortService.checkToken(token)) {
 			

@@ -21,7 +21,6 @@ public class StatisticsService {
 		this.urlRepository = urlRepository;
 	}
 	
-
 	
 	public StatisticsResponse getStatistic() {
 		

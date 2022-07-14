@@ -3,8 +3,6 @@ package hr.asseccosee.controllers;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +35,8 @@ public class StatisticsControllerIntegrationTest {
 		
 		User user = new User("Marko132001", "$2a$10$myavZgV70WIBWrFe4XoxmOM14n0rknq/SyO8gvtK8NTTgA/361Nbe");
 		
+		User user2 = new User("Marko123", "$2a$10$Vwr57dfyjbPTQiTrPNVBNuNFXKTMAvpz30ukw5TZvq2ajQVABQu/u");
+		
 		LoginService.setExistUser(user);
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -47,14 +47,36 @@ public class StatisticsControllerIntegrationTest {
 		ResponseEntity<StatisticsResponse> res = this.restTemplate
 				.exchange("http://localhost:" + port + "/shorty/statistics", HttpMethod.GET, request, StatisticsResponse.class);
 		
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("https://www.overleaf.com/login", 1);
-		
-		
 		
 		assertEquals(200, res.getStatusCodeValue());
-		assertTrue(res.getBody().getPairList().equals(map));
-
+		assertEquals(1, res.getBody().getPairList().size());
+		assertTrue(res.getBody().getPairList().containsKey("https://www.overleaf.com/login"));
+		
+		
+		LoginService.setExistUser(user2);
+				
+		headers.set("Authorization", "Bearer TWFya28xMjM6YjQyN3l5Y0JacA==");
+		
+		request = new HttpEntity<>(headers);
+		
+		res = this.restTemplate
+				.exchange("http://localhost:" + port + "/shorty/statistics", HttpMethod.GET, request, StatisticsResponse.class);
+		
+		assertEquals(200, res.getStatusCodeValue());
+		assertEquals(2, res.getBody().getPairList().size());
+		
+		
+		headers.set("Authorization", "Bearer TWFya28xMjM6YjQyf3l5Y0JacA==");
+		
+		request = new HttpEntity<>(headers);
+		
+		res = this.restTemplate
+				.exchange("http://localhost:" + port + "/shorty/statistics", HttpMethod.GET, request, StatisticsResponse.class);
+		
+		assertEquals(200, res.getStatusCodeValue());
+		
+		assertEquals("Invalid token", res.getBody().getDescription());
+		
 	}
 
 }
