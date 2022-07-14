@@ -1,5 +1,7 @@
 package hr.assecosee.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,14 @@ public class StatisticsController {
 	
 	private ShortyServices shortService = new ShortyServices();
 	
+	private static final Logger LOGGER = LogManager.getLogger(StatisticsController.class);
+	
 	@Autowired
 	private StatisticsService statService;
 	
 	@GetMapping("/statistics")
 	public StatisticsResponse getStatistic(@RequestHeader("Authorization") String token) {
+		LOGGER.trace("Requesting URL shorting statistic.");
 		
 		StatisticsResponse returnStatistics = new StatisticsResponse();
 		
@@ -28,11 +33,12 @@ public class StatisticsController {
 			
 			returnStatistics = statService.getStatistic();
 			
+			LOGGER.debug("Returning statistical information.");
 			return returnStatistics;
 			
 		}
 		
-		
+		LOGGER.debug("Invalid token");
 		returnStatistics = new StatisticsResponse(null, false);
 		
 		return returnStatistics;

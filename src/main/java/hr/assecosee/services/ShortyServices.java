@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.net.URL;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -17,6 +19,8 @@ import hr.assecosee.shorty.UrlRepository;
 public class ShortyServices {
 	
 	private final UrlRepository urlRepository;
+	
+	private static final Logger LOGGER = LogManager.getLogger(ShortyServices.class);
 
 	
 	@Autowired
@@ -32,9 +36,11 @@ public class ShortyServices {
 	
 	public boolean checkToken(String header) {
 		
-		
+		LOGGER.trace("Validating authorization token in checkToken method.");
 		if(LoginService.getExistUser() != null) {
-				
+			
+			LOGGER.debug("User " + LoginService.getExistUser().getUserName() + " logged in.");
+			
 			StringBuilder sb = new StringBuilder("Bearer");
 			
 			String[] listSplit;	
@@ -53,7 +59,7 @@ public class ShortyServices {
 				if(namePasswordBuffer[0].contains(LoginService.getExistUser().getUserName()) && 
 						BCrypt.checkpw(namePasswordBuffer[1], LoginService.getExistUser().getPassword())) {
 					
-					
+					LOGGER.debug("Token " + header + " is valid.");
 					return true;
 				}	
 				
@@ -72,6 +78,7 @@ public class ShortyServices {
 		
 		String userName = LoginService.getExistUser().getUserName();
 		
+		LOGGER.debug("Checking database with params: " + originalUrl + ", " + userName);
 		UrlKeyValue findUrl = urlRepository.findByoriginalUrlAndUserName(originalUrl, userName);
 			
 		
@@ -89,11 +96,12 @@ public class ShortyServices {
 			
 			urlRepository.save(url);
 			
+			LOGGER.debug("Shorted URL is not in the database. Creating hash for short URL.");
 			
 			return encodedHash;
 		}
 		else {			
-			
+			LOGGER.debug("Shorted URL is in the database. Updating the number of redirects.");
 			urlRepository.updateNumberOfRedirects(originalUrl, userName, findUrl.getNumberOfRedirects() + 1);
 			
 		}
